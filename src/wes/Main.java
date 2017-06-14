@@ -6,14 +6,25 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Welcome to Two Layered Neural Network");
-
-        System.out.println("Enter two input values.");
         Scanner in = new Scanner(System.in);
-        double val1 = in.nextDouble();
-        double val2 = in.nextDouble();
+        int i;
 
-        NeuralNetwork neuralNetwork = new NeuralNetwork();
-        neuralNetwork.calcLayer(val1,val2);
+        System.out.println("Enter the amount of input values.");
+        int amt = in.nextInt();
+
+        System.out.println("Enter input values.");
+        NeuralNetwork neuralNetwork = new NeuralNetwork(amt);
+
+        for(i = 0; i < amt; i++){
+            double val = in.nextDouble();
+            neuralNetwork.getLayers()[0].getNeurons()[i].setVal(val);
+        }
+        neuralNetwork.calcLayer();
+
+        System.out.println("The outputs for each Neuron are: ");
+        for (i = 0; i < neuralNetwork.getLayers()[1].getNeurons().length; i++){
+            System.out.println("\t" + neuralNetwork.getLayers()[1].getNeurons()[i].getVal());
+        }
         System.out.println("Calculation completed.");
     }
 }
