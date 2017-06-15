@@ -36,6 +36,13 @@ public class NeuralNetwork {
         }
     }
 
+    //Sets each Neuron's value to an input value.
+    public void startNetwork(double[] inputs){
+        for(int i = 0; i < inputs.length; i++){
+            getLayers()[0].getNeurons()[i].setVal(inputs[i]);
+        }
+    }
+
     //Multiplies the value of each Neuron in the first Layer times a random weight value and returns the logistic function result.
     public double calcNeurons(){
         Random random = new Random();
@@ -46,18 +53,22 @@ public class NeuralNetwork {
 
         //double x = (n1.getVal() * 0.9) + (n2.getVal() * 0.3);
         //double x = (n1.getVal() * 0.2) + (n2.getVal() * 0.8);
-        double y = 1/(1 + Math.pow(2.71828, -x));
+        double y = 1/(1 + Math.pow(Math.E, -x));
 
         return y;
     }
 
     //Sets the values of the second Layer to the results of calcNeurons.
-    public void calcLayer(){
-        //getLayers()[0].fillLayer(n1,n2);
-        for (int i = 0; i < layers[1].getNeurons().length; i++){
+    public double[] calculate(){
+        int i;
+        double[] output = new double[layers[0].getNeurons().length];
+        for (i = 0; i < layers[1].getNeurons().length; i++){
             layers[1].getNeurons()[i].setVal(calcNeurons());
         }
-        //getLayers()[1].fillLayer(calcNeurons(getLayers()[0].getNeurons()[0], getLayers()[0].getNeurons()[1]), calcNeurons(getLayers()[0].getNeurons()[0], getLayers()[0].getNeurons()[1]));
+        for (i = 0; i < layers[1].getNeurons().length; i++){
+            output[i] = layers[1].getNeurons()[i].getVal();
+        }
+        return output;
     }
 
     public Layer[] getLayers() {

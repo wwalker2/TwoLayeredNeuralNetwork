@@ -14,16 +14,17 @@ public class Main {
 
         System.out.println("Enter input values.");
         NeuralNetwork neuralNetwork = new NeuralNetwork(amt);
+        double[] inputs = new double[amt];
 
         for(i = 0; i < amt; i++){
-            double val = in.nextDouble();
-            neuralNetwork.getLayers()[0].getNeurons()[i].setVal(val);
+            inputs[i] = in.nextDouble();
         }
-        neuralNetwork.calcLayer();
+        neuralNetwork.startNetwork(inputs);
 
+        double[] ouputs = neuralNetwork.calculate();
         System.out.println("The outputs for each Neuron are: ");
-        for (i = 0; i < neuralNetwork.getLayers()[1].getNeurons().length; i++){
-            System.out.println("\t" + neuralNetwork.getLayers()[1].getNeurons()[i].getVal());
+        for(i = 0; i < ouputs.length; i++){
+            System.out.println(ouputs[i]);
         }
         System.out.println("Calculation completed.");
     }
