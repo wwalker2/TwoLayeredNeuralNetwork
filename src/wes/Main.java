@@ -12,11 +12,14 @@ public class Main {
         System.out.println("Enter the amount of input values.");
         int amt = in.nextInt();
 
+        System.out.println("Enter the number of layers.");
+        int layers = in.nextInt();
+
+        NeuralNetwork neuralNetwork = new NeuralNetwork(amt, layers);
+
         System.out.println("Enter input values.");
-        NeuralNetwork neuralNetwork = new NeuralNetwork(amt);
         double[] inputs = new double[amt];
         enterInputs(inputs);
-
         neuralNetwork.startNetwork(inputs);
 
         double[] outputs = neuralNetwork.calculate();
