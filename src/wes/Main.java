@@ -5,9 +5,8 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Welcome to Two Layered Neural Network");
+        System.out.println("Welcome to Multi-Layered Neural Network");
         Scanner in = new Scanner(System.in);
-        int i;
 
         System.out.println("Enter the amount of input values.");
         int amt = in.nextInt();
@@ -15,7 +14,7 @@ public class Main {
         System.out.println("Enter the number of layers.");
         int layers = in.nextInt();
 
-        NeuralNetwork neuralNetwork = new NeuralNetwork(amt, layers);
+        NeuralNetwork neuralNetwork = new NeuralNetwork(layers);
 
         System.out.println("Enter input values.");
         double[] inputs = new double[amt];
@@ -30,16 +29,16 @@ public class Main {
         in.close();
     }
 
-    public static void enterInputs(double[] inputs){
+    public static void enterInputs(double[] inputs) {
         Scanner in = new Scanner(System.in);
-        for(int i = 0; i < inputs.length; i++){
+        for (int i = 0; i < inputs.length; i++) {
             inputs[i] = in.nextDouble();
         }
         in.close();
     }
 
-    public static void printOutputs(double[] outputs){
-        for(int i = 0; i < outputs.length; i++){
+    public static void printOutputs(double[] outputs) {
+        for (int i = 0; i < outputs.length; i++) {
             System.out.println(outputs[i]);
         }
     }
