@@ -26,15 +26,14 @@ public class Main {
         printOutputs(outputs);
 
         System.out.println("Calculation completed.");
-        in.close();
+
     }
 
     public static void enterInputs(double[] inputs) {
-        Scanner in = new Scanner(System.in);
+        Scanner keyboard = new Scanner(System.in);
         for (int i = 0; i < inputs.length; i++) {
-            inputs[i] = in.nextDouble();
+            inputs[i] = keyboard.nextDouble();
         }
-        in.close();
     }
 
     public static void printOutputs(double[] outputs) {
