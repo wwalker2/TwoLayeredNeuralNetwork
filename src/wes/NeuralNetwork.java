@@ -1,6 +1,5 @@
 package wes;
 
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -59,39 +58,47 @@ public class NeuralNetwork {
 
 
 
-    //Multiplies the value of each Neuron in the first Layer times a random weight value and returns the logistic function result.
+    //Multiplies the value of each Neuron in the first Layer times a random weight value and returns the logisticFunction function result.
     public double calcNeurons(Layer layer, int weight) {
         layer.giveWeights();
         double x = 0;
+
         for (int i = 0; i < layer.getNeurons().length; i++) {
             x += (layer.getNeurons()[i].getVal() * layer.getNeurons()[i].getWeights().get(weight));
         }
 
-        double y = logistic(x);
+        double y = logisticFunction(x);
 
         return y;
     }
 
-    //Uses the logistic activation function.
-    public double logistic(double x){
-
+    //Uses the Logistic activation function.
+    public double logisticFunction(double x){
         return (1 / (1 + Math.pow(Math.E, -x)));
+    }
+
+    //Uses the Linear activation function.
+    public double linearFunction(double x){
+        return x;
     }
 
     //Sets the values of the next Layer to the results of calcNeurons.
     public double[] calculate() {
         int i, j;
-        int weight = 0;
         double[] output = new double[layers[layers.length-1].getNeurons().length];
+
         for (i = 1; i < layers.length; i++) {
+            int weight = 0;
             for (j = 0; j < layers[i].getNeurons().length; j++) {
                 layers[i].getNeurons()[j].setVal(calcNeurons(layers[i - 1],weight));
                 weight++;
             }
         }
+
         for (i = 0; i < layers[layers.length - 1].getNeurons().length; i++) {
             output[i] = layers[layers.length - 1].getNeurons()[i].getVal();
         }
+
         return output;
     }
 
@@ -101,5 +108,9 @@ public class NeuralNetwork {
 
     public void setLayers(Layer[] layers) {
         this.layers = layers;
+    }
+
+    public void backprop(){
+
     }
 }

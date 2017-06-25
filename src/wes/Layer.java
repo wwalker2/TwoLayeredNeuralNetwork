@@ -32,9 +32,11 @@ public class Layer {
     public void giveWeights(){
         int weightsGiven = weights.size()/neurons.length;
         int i,j;
-        for(i = 0; i < weights.size(); i++){
+        int weight = 0;
+        for(i = 0; i < neurons.length; i++){
             for (j = 0; j < weightsGiven; j++){
-                neurons[j].getWeights().add(weights.get(i));
+                neurons[i].getWeights().add(weights.get(weight));
+                weight++;
             }
         }
     }
@@ -53,5 +55,19 @@ public class Layer {
 
     public void setWeights(ArrayList<Double> weights) {
         this.weights = weights;
+    }
+
+    public void backprop(){
+        int i,j;
+
+        for(i = 0; i < weights.size(); i++){
+            int neumarator = 0;
+            double denominator = 0;
+            for(j = 0; j < neurons.length; j++){
+                denominator += neurons[j].getWeights().get(i);
+            }
+            double newWeight = neurons[neumarator].getWeights().get(i) / denominator;
+            neumarator++;
+        }
     }
 }

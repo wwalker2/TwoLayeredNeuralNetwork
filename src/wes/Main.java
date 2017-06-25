@@ -14,6 +14,9 @@ public class Main {
         System.out.println("Enter the number of layers.");
         int layers = in.nextInt();
 
+        System.out.println("Enter the target value.");
+        double target = in.nextDouble();
+
         NeuralNetwork neuralNetwork = new NeuralNetwork(layers);
 
         System.out.println("Enter input values.");
@@ -39,6 +42,14 @@ public class Main {
     public static void printOutputs(double[] outputs) {
         for (int i = 0; i < outputs.length; i++) {
             System.out.println(outputs[i]);
+        }
+    }
+
+    public static void checkError(int target, double[] outputs){
+        double[] errors = new double[outputs.length];
+        int i;
+        for(i = 0; i < errors.length; i++){
+            errors[i] = target - outputs[i];
         }
     }
 }
