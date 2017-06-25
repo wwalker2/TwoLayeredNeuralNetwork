@@ -14,10 +14,13 @@ public class Main {
         System.out.println("Enter the number of layers.");
         int layers = in.nextInt();
 
-        System.out.println("Enter the target value.");
-        double target = in.nextDouble();
+//        System.out.println("Enter the target value.");
+//        double target = in.nextDouble();
 
-        NeuralNetwork neuralNetwork = new NeuralNetwork(layers);
+        System.out.println("Choose the activation function. 1 for Linear. 2 for Logistic");
+        int actFunc = in.nextInt();
+
+        NeuralNetwork neuralNetwork = new NeuralNetwork(layers, actFunc);
 
         System.out.println("Enter input values.");
         double[] inputs = new double[amt];

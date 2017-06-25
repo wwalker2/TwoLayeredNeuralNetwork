@@ -12,26 +12,28 @@ public class NeuralNetwork {
 
 
     private Layer[] layers;
+    private int actFunc;
 
     public NeuralNetwork() {
         setLayers(new Layer[2]);
         initilize();
     }
 
-    public NeuralNetwork(int l) {
+    public NeuralNetwork(int l, int af) {
         setLayers(new Layer[l]);
+        actFunc = af;
         initilize();
         giveWeights();
     }
 
 
     //Gives each layer a number of weight values determined by the product of # neurons in the first layer and the # in the next layer.
-    private void giveWeights(){
+    private void giveWeights() {
         Random random = new Random();
-        int i,j;
-        for(i = 0; i < layers.length-1; i++){
-            int numofWeights = (layers[i].getNeurons().length * layers[i+1].getNeurons().length);
-            for(j = 0; j < numofWeights; j++){
+        int i, j;
+        for (i = 0; i < layers.length - 1; i++) {
+            int numofWeights = (layers[i].getNeurons().length * layers[i + 1].getNeurons().length);
+            for (j = 0; j < numofWeights; j++) {
                 layers[i].getWeights().add(random.nextDouble());
             }
         }
@@ -57,7 +59,6 @@ public class NeuralNetwork {
     }
 
 
-
     //Multiplies the value of each Neuron in the first Layer times a random weight value and returns the logisticFunction function result.
     public double calcNeurons(Layer layer, int weight) {
         layer.giveWeights();
@@ -67,30 +68,42 @@ public class NeuralNetwork {
             x += (layer.getNeurons()[i].getVal() * layer.getNeurons()[i].getWeights().get(weight));
         }
 
-        double y = logisticFunction(x);
+
+        double y = 0;
+        switch (actFunc) {
+            case 1:
+                y = linearFunction(x);
+                break;
+            case 2:
+                y = logisticFunction(x);
+                break;
+
+            default:
+                break;
+        }
 
         return y;
     }
 
     //Uses the Logistic activation function.
-    public double logisticFunction(double x){
+    public double logisticFunction(double x) {
         return (1 / (1 + Math.pow(Math.E, -x)));
     }
 
     //Uses the Linear activation function.
-    public double linearFunction(double x){
+    public double linearFunction(double x) {
         return x;
     }
 
     //Sets the values of the next Layer to the results of calcNeurons.
     public double[] calculate() {
         int i, j;
-        double[] output = new double[layers[layers.length-1].getNeurons().length];
+        double[] output = new double[layers[layers.length - 1].getNeurons().length];
 
         for (i = 1; i < layers.length; i++) {
             int weight = 0;
             for (j = 0; j < layers[i].getNeurons().length; j++) {
-                layers[i].getNeurons()[j].setVal(calcNeurons(layers[i - 1],weight));
+                layers[i].getNeurons()[j].setVal(calcNeurons(layers[i - 1], weight));
                 weight++;
             }
         }
@@ -110,7 +123,7 @@ public class NeuralNetwork {
         this.layers = layers;
     }
 
-    public void backprop(){
+    public void backprop() {
 
     }
 }
