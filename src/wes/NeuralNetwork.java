@@ -13,15 +13,17 @@ public class NeuralNetwork {
 
     private Layer[] layers;
     private int actFunc;
+    private double learningRate;
 
     public NeuralNetwork() {
         setLayers(new Layer[2]);
         initilize();
     }
 
-    public NeuralNetwork(int l, int af) {
+    public NeuralNetwork(int l, int af, double lr) {
         setLayers(new Layer[l]);
         actFunc = af;
+        learningRate = lr;
         initilize();
         giveWeights();
     }
@@ -59,7 +61,7 @@ public class NeuralNetwork {
     }
 
 
-    //Multiplies the value of each Neuron in the first Layer times a random weight value and returns the logisticFunction function result.
+    //Multiplies the value of each Neuron in the first Layer times a weight value and returns the logisticFunction function result.
     public double calcNeurons(Layer layer, int weight) {
         layer.giveWeights();
         double x = 0;
@@ -67,7 +69,6 @@ public class NeuralNetwork {
         for (int i = 0; i < layer.getNeurons().length; i++) {
             x += (layer.getNeurons()[i].getVal() * layer.getNeurons()[i].getWeights().get(weight));
         }
-
 
         double y = 0;
         switch (actFunc) {
@@ -123,7 +124,34 @@ public class NeuralNetwork {
         this.layers = layers;
     }
 
-    public void backprop() {
+    public void backprop(double target) {
+        int i,j;
 
+        for(i = layers.length-1; i > 0; i--){
+            int weight = 0;
+            for(j = 0; j < layers[i].getNeurons().length; j++){
+                double error = target - layers[i].getNeurons()[j].getVal();
+                double logistic = calcNewWeight(layers[i-1], layers[i], weight);
+
+                double update = -(learningRate * (-error * (logistic * (1-logistic)) * layers[i].getNeurons()[j].getVal()));
+                double newWeight = layers[i-1].getNeurons()[j].getWeights().get(weight) + update;
+                layers[i-1].getNeurons()[j].getWeights().set(weight,newWeight);
+                weight++;
+            }
+        }
+    }
+
+    public double calcNewWeight(Layer layer1, Layer layer2, int weight){
+        double x = 0;
+
+        for (int i = 0; i < layer1.getNeurons().length; i++) {
+            x += (layer1.getNeurons()[i].getWeights().get(weight) * layer2.getNeurons()[i].getVal());
+        }
+
+        double y = 0;
+
+        y = logisticFunction(x);
+
+        return y;
     }
 }

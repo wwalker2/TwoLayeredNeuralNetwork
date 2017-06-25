@@ -14,13 +14,16 @@ public class Main {
         System.out.println("Enter the number of layers.");
         int layers = in.nextInt();
 
-//        System.out.println("Enter the target value.");
-//        double target = in.nextDouble();
+        System.out.println("Enter the target value.");
+        double target = in.nextDouble();
+
+        System.out.println("Enter a learning rate.");
+        double learningRate = in.nextDouble();
 
         System.out.println("Choose the activation function. 1 for Linear. 2 for Logistic");
         int actFunc = in.nextInt();
 
-        NeuralNetwork neuralNetwork = new NeuralNetwork(layers, actFunc);
+        NeuralNetwork neuralNetwork = new NeuralNetwork(layers, actFunc, learningRate);
 
         System.out.println("Enter input values.");
         double[] inputs = new double[amt];
@@ -48,11 +51,11 @@ public class Main {
         }
     }
 
-    public static void checkError(int target, double[] outputs){
+    /*public static void checkError(int target, double[] outputs){
         double[] errors = new double[outputs.length];
         int i;
         for(i = 0; i < errors.length; i++){
             errors[i] = target - outputs[i];
         }
-    }
+    }*/
 }
