@@ -124,34 +124,35 @@ public class NeuralNetwork {
         this.layers = layers;
     }
 
+    //Updates all of the weight values in every layer.
     public void backprop(double target) {
         int i,j;
 
         for(i = layers.length-1; i > 0; i--){
             int weight = 0;
-            for(j = 0; j < layers[i].getNeurons().length; j++){
-                double error = target - layers[i].getNeurons()[j].getVal();
-                double logistic = calcNewWeight(layers[i-1], layers[i], weight);
 
-                double update = -(learningRate * (-error * (logistic * (1-logistic)) * layers[i].getNeurons()[j].getVal()));
-                double newWeight = layers[i-1].getNeurons()[j].getWeights().get(weight) + update;
-                layers[i-1].getNeurons()[j].getWeights().set(weight,newWeight);
-                weight++;
-            }
         }
     }
 
-    public double calcNewWeight(Layer layer1, Layer layer2, int weight){
+    //Calculates a new updated weight based on a previous weight value.
+    public double calcNewWeight(Layer layer1, Layer layer2, int weight, double target, Neuron n1, Neuron n2){
+        double error = target - n2.getVal();
+
         double x = 0;
+        double logistic = 0;
 
         for (int i = 0; i < layer1.getNeurons().length; i++) {
             x += (layer1.getNeurons()[i].getWeights().get(weight) * layer2.getNeurons()[i].getVal());
         }
 
-        double y = 0;
+        logistic = logisticFunction(x);
 
-        y = logisticFunction(x);
 
-        return y;
+        double update = -(learningRate * (-error * (logistic * (1-logistic)) * n2.getVal()));
+
+        double newWeight = n1.getWeights().get(weight) + update;
+
+        return newWeight;
     }
+
 }
