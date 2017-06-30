@@ -14,6 +14,7 @@ public class NeuralNetwork {
     private Layer[] layers;
     private int actFunc;
     private double learningRate;
+    
 
     public NeuralNetwork() {
         setLayers(new Layer[2]);
@@ -139,13 +140,12 @@ public class NeuralNetwork {
         double error = target - n2.getVal();
 
         double x = 0;
-        double logistic = 0;
 
         for (int i = 0; i < layer1.getNeurons().length; i++) {
-            x += (layer1.getNeurons()[i].getWeights().get(weight) * layer2.getNeurons()[i].getVal());
+            x += (layer1.getWeight(i,weight) * layer2.getNeurons()[i].getVal());
         }
 
-        logistic = logisticFunction(x);
+        double logistic = logisticFunction(x);
 
 
         double update = -(learningRate * (-error * (logistic * (1-logistic)) * n2.getVal()));

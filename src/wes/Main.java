@@ -51,11 +51,4 @@ public class Main {
         }
     }
 
-    /*public static void checkError(int target, double[] outputs){
-        double[] errors = new double[outputs.length];
-        int i;
-        for(i = 0; i < errors.length; i++){
-            errors[i] = target - outputs[i];
-        }
-    }*/
 }

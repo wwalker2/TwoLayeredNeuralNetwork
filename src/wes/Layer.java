@@ -57,17 +57,7 @@ public class Layer {
         this.weights = weights;
     }
 
- /*   public void backprop(){
-        int i,j;
-
-        for(i = 0; i < weights.size(); i++){
-            int neumarator = 0;
-            double denominator = 0;
-            for(j = 0; j < neurons.length; j++){
-                denominator += neurons[j].getWeights().get(i);
-            }
-            double newWeight = neurons[neumarator].getWeights().get(i) / denominator;
-            neumarator++;
-        }
-    }*/
+    public double getWeight(int neuron, int weight){
+        return this.neurons[neuron].getWeights().get(weight);
+    }
 }
