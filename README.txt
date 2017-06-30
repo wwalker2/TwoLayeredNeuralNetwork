@@ -1,5 +1,5 @@
 This is a Java program that allows the user to create a multi-layer neural network.
-To demonstrate the useage of this program here are the steps to create a three-layer neural network with three neurons per layer.
+To demonstrate the usage of this program here are the steps to create a three-layer neural network with three neurons per layer.
 
 1.Enter the number 3 as number input values.
 2.When choosing the number of layers in the neural network enter 3 again.

@@ -1,63 +1,64 @@
 package wes;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
- * Created by wes19_000 on 6/14/2017.
+ * Created by wes19_000 on 6/30/2017.
  */
 public class Layer {
-    public Neuron[] getNeurons() {
-        return neurons;
+
+    public class Neuron{
+        private double val;
+        private ArrayList<Double> weights;
+
+        public Neuron(){
+            setVal(0);
+            setWeights(new ArrayList<>());
+        }
+        public Neuron(double v){
+            setVal(v);
+            setWeights(new ArrayList<>());
+        }
+
+        public double getVal() {
+            return val;
+        }
+
+        public void setVal(double val) {
+            this.val = val;
+        }
+
+        public ArrayList<Double> getWeights() {
+            return weights;
+        }
+
+        public void setWeights(ArrayList<Double> weights) {
+            this.weights = weights;
+        }
     }
 
-    public void setNeurons(Neuron[] neurons) {
-        this.neurons = neurons;
+    private ArrayList<Neuron> neurons;
+
+    public Layer(int num){
+        neurons = new ArrayList<>();
+        initilizeLayer(num);
     }
 
-    private Neuron[] neurons;
-    private ArrayList<Double> weights;
+    public void initilizeLayer(int num){
+        int i;
 
-    public Layer(){
-        setNeurons(new Neuron[2]);
-        initilize();
+        for (i = 0; i < num; i++) {
+            neurons.add(new Neuron());
+        }
     }
 
-    public Layer(int n){
-        setNeurons(new Neuron[n]);
-        setWeights(new ArrayList<>());
-        initilize();
-    }
-
-    //Gives each neuron a number of weight values (the total # weights in the layer / the total # neurons in the layer).
-    public void giveWeights(){
-        int weightsGiven = weights.size()/neurons.length;
-        int i,j;
-        int weight = 0;
-        for(i = 0; i < neurons.length; i++){
-            for (j = 0; j < weightsGiven; j++){
-                neurons[i].getWeights().add(weights.get(weight));
-                weight++;
+    public void giveWeights(Layer nxtLayer){
+        Random random = new Random();
+        for (int i = 0; i < neurons.size(); i++) {
+            for (int j = 0; j < nxtLayer.neurons.size(); j++) {
+                neurons.get(i).getWeights().add(random.nextDouble());
             }
         }
-    }
-
-    //Declares N Neurons in the neurons array.
-    public void initilize(){
-        for (int i = 0; i < neurons.length; i++){
-            neurons[i] = new Neuron();
-        }
-    }
-
-
-    public ArrayList<Double> getWeights() {
-        return weights;
-    }
-
-    public void setWeights(ArrayList<Double> weights) {
-        this.weights = weights;
-    }
-
-    public double getWeight(int neuron, int weight){
-        return this.neurons[neuron].getWeights().get(weight);
     }
 }
