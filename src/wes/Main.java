@@ -40,8 +40,11 @@ public class Main {
 
         System.out.println("Here are the output values.");
         neuralNetwork.printOutputs();
+
+        neuralNetwork.backPropagation();
     }
 
+    //Sets how many neurons are in each layer.
     public static void howManyNeurons(int[] neurons){
         Scanner keyboard = new Scanner(System.in);
         for (int i = 0; i < neurons.length; i++) {
@@ -49,6 +52,7 @@ public class Main {
         }
     }
 
+    //Sets the input values used.
     public static void setInputs(double[] inputs){
         Scanner keyboard = new Scanner(System.in);
         for (int i = 0; i < inputs.length; i++) {

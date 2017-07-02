@@ -24,6 +24,7 @@ public class NeuralNetwork {
         }
     }
 
+    //Gives weight values to the neurons in each layer.
     public void giveWeights(){
         int i;
         for(i = 1; i < layers.size(); i++){
@@ -31,6 +32,7 @@ public class NeuralNetwork {
         }
     }
 
+    //Implements forward propagation.
     public void forwardPropagation(double[] inputs){
         giveWeights();
 
@@ -42,9 +44,19 @@ public class NeuralNetwork {
         }
     }
 
+    //Outputs each value in the output layer.
     public void printOutputs(){
         for(int i = 0; i < layers.get(layers.size()-1).getNeurons().size(); i++){
             System.out.println(layers.get(layers.size()-1).getNeurons().get(i).getVal());
+        }
+    }
+
+    //Implements back propagation.
+    public void backPropagation(){
+        int i;
+
+        for(i = layers.size()-1; i > 0; i--){
+            layers.get(i-1).updateWeights(target,learningRate,layers.get(i));
         }
     }
 }
