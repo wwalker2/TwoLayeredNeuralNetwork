@@ -115,10 +115,10 @@ public class Layer {
     }
 
     //Calculates how much to update a weight by.
-    public double weightUpdate(double target, double learnRate, double output, int weight) {
+    public double weightUpdate(int neuron, double target, double learnRate, double output, int weight) {
         double error = target - output;
 
-        int i, j;
+        int i;
         double x = 0;
         for (i = 0; i < this.getNeurons().size(); i++) {
             x += this.getNeurons().get(i).getWeight(weight) * this.getNeurons().get(i).getVal();
@@ -126,7 +126,7 @@ public class Layer {
         }
         double logistic = logisticFunction(x);
 
-        double update = -learnRate * (-error * (logistic * (1 - logistic)) * output);
+        double update = -learnRate * (-error * (logistic * (1 - logistic)) * this.getNeurons().get(neuron).getVal());
 
         return update;
     }
@@ -138,7 +138,7 @@ public class Layer {
         for (i = 0; i < this.getNeurons().size(); i++) {
             int weight = 0;
             for (j = 0; j < this.getNeurons().get(i).weights.size(); j++) {
-                double newWeight = this.getNeurons().get(i).getWeight(j) + this.weightUpdate(target, learnRate, outLayer.getNeurons().get(weight).getVal(), weight);
+                double newWeight = this.getNeurons().get(i).getWeight(j) + this.weightUpdate(i, target, learnRate, outLayer.getNeurons().get(weight).getVal(), weight);
                 this.getNeurons().get(i).getWeights().set(j, newWeight);
                 weight++;
             }
